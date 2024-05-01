@@ -22,7 +22,6 @@ with gr.Blocks() as demo:
         with gr.Column():
             input_area(classify, supported_detectors, outputs_labels,)
         with gr.Column():
-            # gr.Markdown("## Is the text AI generated? 🤖")
             outputs_labels.render()
 
 demo.launch()

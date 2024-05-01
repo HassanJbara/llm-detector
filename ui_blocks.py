@@ -11,9 +11,8 @@ def action_buttons(func, inputs, outputs):
     return row
 
 def input_options(supported_detectors: List[Dict[str, str]]):
-    with gr.Group():
-        prompt_box = gr.Textbox(lines=2, label="Prompt")
-        use_prompt_checkbox = gr.Checkbox(label="Include Prompt", value=False,)
+    prompt_box = gr.Textbox(lines=2, label="Prompt")
+    use_prompt_checkbox = gr.Checkbox(label="Include Prompt", value=False,)
 
     response_box = gr.Textbox(lines=10, label="Response")
     detectors_dropdown = gr.Dropdown(
@@ -23,8 +22,12 @@ def input_options(supported_detectors: List[Dict[str, str]]):
         value=supported_detectors[0]["key"], 
         info="What detectors to use for evaluation"
     )
+    device_radio = gr.Radio(label="Device", show_label=True, 
+                            choices=["cuda", "cpu"], value="cuda", 
+                            info="Select the device to run the model on. For now, only CPU and CUDA are supported. Please be aware of the memory constraints of your device.",
+                            )
 
-    return [prompt_box, response_box, detectors_dropdown, use_prompt_checkbox]
+    return [prompt_box, response_box, detectors_dropdown, use_prompt_checkbox, device_radio]
 
 def input_area(func: Callable[[str, str, str], float],  supported_detectors: List[Dict[str, str]], outputs,):
     inputs = input_options(supported_detectors=supported_detectors)

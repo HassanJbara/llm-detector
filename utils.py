@@ -4,10 +4,10 @@ from transformers import pipeline
 from ui_blocks import results_labels_html
 
 supported_detectors: List[Dict[str, str]] = [
-    {
-        "key": "DetectGPT",
-        "value": "DetectGPT"
-    }, 
+    # {
+    #     "key": "DetectGPT",
+    #     "value": "DetectGPT"
+    # }, 
     {
         "key": "SimpleAI",
         "value": "Hello-SimpleAI/chatgpt-detector-roberta"
@@ -25,8 +25,11 @@ def prepare_classifier_pipe(classifier, device=None):
 
     return classifier_pipe
 
-def classify(query: str, response: str, classifier: str, with_query: bool) -> str:
-    classifier_pipe = prepare_classifier_pipe(classifier, device="cuda")
+def classify(query: str, response: str, classifier: str, with_query: bool, device: str) -> str:
+    assert response, "Response cannot be empty!"
+    assert not with_query or query, "Query cannot be empty when 'Include Prompt' is selected!"
+
+    classifier_pipe = prepare_classifier_pipe(classifier, device=device)
 
     sent_kwargs = {
         "truncation": True, 
