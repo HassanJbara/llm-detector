@@ -4,16 +4,21 @@ from ui.blocks import results_labels_html
 from binoculars import Binoculars
 from config import supported_detectors
 from typing import List
-
+from ghostbuster import Ghostbuster
 
 def prepare_classifier(classifier, device=None):
     assert classifier in [x["key"] for x in supported_detectors], f"Classifier {classifier} not supported!"
 
     if classifier.lower() == "binoculars":
         # build classifier pipeline
-        return Binoculars(observer_name_or_path="google/gemma-2b",
-                 performer_name_or_path="google/gemma-1.1-2b-it",)
+        return Binoculars(
+            observer_name_or_path="google/gemma-2b",
+            performer_name_or_path="google/gemma-1.1-2b-it"
+        )
     
+    if classifier.lower() == "ghostbuster":
+        return Ghostbuster()
+
     # otherwise it must be simpleAI model
     # build classifier pipeline
     if not device:

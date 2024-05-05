@@ -6,10 +6,10 @@ This project aims to offer unified tools for testing and using LLM detectors.
 
 - [x] [SimpleAI](https://huggingface.co/Hello-SimpleAI/chatgpt-detector-roberta)
 - [x] [Binoculars](https://github.com/ahans30/Binoculars)
+- [x] Ghostbuster
 - [ ] DetectGPT
 - [ ] DetectLLM
 - [ ] Fast-DetectGPT
-- [ ] Ghostbuster
 
 ## Gradio Interface
 

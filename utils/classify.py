@@ -25,6 +25,13 @@ def classify_with_binoculars(text: str, device: str) -> float:
     return evaluation
 
 
+def classify_with_ghostbuster(text: str, device: str) -> float:
+    classifier = "Ghostbuster"
+    ghostbuster = prepare_classifier(classifier=classifier, device=device)
+    evaluation = ghostbuster.predict(text)
+
+    return evaluation
+
 def classify(query: str, response: str, classifiers: List[str], with_query: bool, device: str) -> str:
     assert response, "Response cannot be empty!"
     assert not with_query or query, "Query cannot be empty when 'Include Prompt' is selected!"
@@ -38,5 +45,7 @@ def classify(query: str, response: str, classifiers: List[str], with_query: bool
         evaluations.append(classify_with_binoculars(text, device))
     if "simpleai" in classifiers_lower:
         evaluations.append(classify_with_simpleai(text, device))
-    
+    if "ghostbuster" in classifiers_lower:
+        evaluations.append(classify_with_ghostbuster(text, device))
+
     return process_output(classifiers, evaluations)

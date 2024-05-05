@@ -6,6 +6,10 @@ huggingface_config = {
     "TOKEN": os.environ.get("HF_TOKEN", None)
 }
 
+openai_config = {
+    "API_KEY": os.environ.get("OPENAI_API_KEY", None)
+}
+
 supported_detectors: List[Dict[str, str]] = [
     {
         "key": "Binoculars",
@@ -14,5 +18,9 @@ supported_detectors: List[Dict[str, str]] = [
     {
         "key": "SimpleAI",
         "value": "Hello-SimpleAI/chatgpt-detector-roberta"
+    },
+    {
+        "key": "Ghostbuster",
+        "value": "ghostbuster"
     }
 ]
