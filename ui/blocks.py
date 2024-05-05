@@ -1,5 +1,6 @@
 import gradio as gr
-from typing import List, Callable, Dict
+from typing import List, Callable
+from config import supported_detectors
 
 def action_buttons(func, inputs, outputs):
     with gr.Row() as row:
@@ -10,7 +11,7 @@ def action_buttons(func, inputs, outputs):
 
     return row
 
-def input_options(supported_detectors: List[Dict[str, str]]):
+def input_options():
     prompt_box = gr.Textbox(lines=2, label="Prompt")
     use_prompt_checkbox = gr.Checkbox(label="Include Prompt", value=False,)
 
@@ -18,8 +19,8 @@ def input_options(supported_detectors: List[Dict[str, str]]):
     detectors_dropdown = gr.Dropdown(
         label="Detectors", 
         choices=[x["key"] for x in supported_detectors], 
-        # multiselect=True,
-        value=supported_detectors[0]["key"], 
+        multiselect=True,
+        value=[supported_detectors[0]["key"]], 
         info="What detectors to use for evaluation"
     )
     device_radio = gr.Radio(label="Device", show_label=True, 
@@ -29,8 +30,8 @@ def input_options(supported_detectors: List[Dict[str, str]]):
 
     return [prompt_box, response_box, detectors_dropdown, use_prompt_checkbox, device_radio]
 
-def input_area(func: Callable[[str, str, str], float],  supported_detectors: List[Dict[str, str]], outputs,):
-    inputs = input_options(supported_detectors=supported_detectors)
+def input_area(func: Callable[[str, str, str], float], outputs,):
+    inputs = input_options()
     action_buttons(func, inputs, outputs)
 
 def results_labels_html(labels: List[str], scores: List[float]):

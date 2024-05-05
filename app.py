@@ -1,6 +1,6 @@
 import gradio as gr
-from utils import classify, supported_detectors
-from ui_blocks import input_area
+from utils.classify import classify
+from ui.blocks import input_area
 
 # def main():
 
@@ -20,7 +20,7 @@ with gr.Blocks() as demo:
     gr.Markdown("# LLM Detector Tools 🕵️‍♂️")
     with gr.Row():
         with gr.Column():
-            input_area(classify, supported_detectors, outputs_labels,)
+            input_area(classify, outputs_labels,)
         with gr.Column():
             outputs_labels.render()
 
