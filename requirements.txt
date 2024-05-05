@@ -71,9 +71,9 @@ tbb==2021.12.0
 tokenizers==0.19.1
 tomlkit==0.12.0
 toolz==0.12.1
-torch==2.3.0+cu121
-torchaudio==2.3.0+cu121
-torchvision==0.18.0+cu121
+torch==2.3.0
+torchaudio==2.3.0
+torchvision==0.18.0
 tqdm==4.66.4
 transformers==4.40.1
 typer==0.12.3
