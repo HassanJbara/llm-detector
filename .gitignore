@@ -33,3 +33,4 @@ ENV/
 Thumbs.db
 
 flagged/
+.python-version
