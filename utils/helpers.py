@@ -5,6 +5,7 @@ from binoculars import Binoculars
 from config import supported_detectors
 from typing import List
 from ghostbuster import Ghostbuster
+from gptzero import GPTZero
 
 def prepare_classifier(classifier, device=None):
     assert classifier in [x["key"] for x in supported_detectors], f"Classifier {classifier} not supported!"
@@ -18,6 +19,9 @@ def prepare_classifier(classifier, device=None):
     
     if classifier.lower() == "ghostbuster":
         return Ghostbuster()
+
+    if classifier.lower() == "gptzero":
+        return GPTZero(device=device)
 
     # otherwise it must be simpleAI model
     # build classifier pipeline

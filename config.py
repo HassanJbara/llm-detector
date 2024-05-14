@@ -22,5 +22,9 @@ supported_detectors: List[Dict[str, str]] = [
     {
         "key": "Ghostbuster",
         "value": "ghostbuster"
+    },
+    {
+        "key": "GPTZero",
+        "value": "gptzero"
     }
 ]

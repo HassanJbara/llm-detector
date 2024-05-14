@@ -32,6 +32,14 @@ def classify_with_ghostbuster(text: str, device: str) -> float:
 
     return evaluation
 
+def classify_with_gptzero(text: str, device: str) -> float:
+    classifier = "GPTZero"
+    gptzero = prepare_classifier(classifier=classifier, device=device)
+    evaluation = gptzero.get_score(text)
+
+    return evaluation
+
+
 def classify(query: str, response: str, classifiers: List[str], with_query: bool, device: str) -> str:
     assert response, "Response cannot be empty!"
     assert not with_query or query, "Query cannot be empty when 'Include Prompt' is selected!"
@@ -47,5 +55,7 @@ def classify(query: str, response: str, classifiers: List[str], with_query: bool
         evaluations.append(classify_with_simpleai(text, device))
     if "ghostbuster" in classifiers_lower:
         evaluations.append(classify_with_ghostbuster(text, device))
+    if "gptzero" in classifiers_lower:
+        evaluations.append(classify_with_gptzero(text, device))
 
     return process_output(classifiers, evaluations)
