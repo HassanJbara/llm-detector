@@ -1,9 +1,11 @@
 from typing import List
 from utils.helpers import prepare_classifier, process_output
 
-def classify_with_simpleai(text: str, device: str) -> float:
-    classifier = "SimpleAI"
-    classifier_pipe = prepare_classifier(classifier, device=device)
+
+def classify_with_simpleai(text: str, device: str, simpleai=None) -> float:
+    if simpleai==None:
+        classifier = "SimpleAI"
+        simpleai = prepare_classifier(classifier, device=device)
 
     sent_kwargs = {
         "truncation": True, 
@@ -11,30 +13,37 @@ def classify_with_simpleai(text: str, device: str) -> float:
         "top_k": None,
     }
 
-    evaluation = classifier_pipe(text, **sent_kwargs) # returns a list of dictionaries
+    evaluation = simpleai(text, **sent_kwargs) # returns a list of dictionaries
     evaluation = [x["score"] for x in evaluation if x['label'].lower() == 'chatgpt'][0]
 
     return evaluation
 
 
-def classify_with_binoculars(text: str, device: str) -> float:
-    classifier = "Binoculars"
-    bino = prepare_classifier(classifier=classifier, device=device)
+def classify_with_binoculars(text: str, device: str, bino=None) -> float:
+    if bino==None:
+        classifier = "Binoculars"
+        bino = prepare_classifier(classifier=classifier, device=device)
+    
     evaluation = bino.compute_score(text)
 
     return evaluation
 
 
-def classify_with_ghostbuster(text: str, device: str) -> float:
-    classifier = "Ghostbuster"
-    ghostbuster = prepare_classifier(classifier=classifier, device=device)
+def classify_with_ghostbuster(text: str, device: str, ghostbuster=None) -> float:
+    if ghostbuster==None:
+        classifier = "Ghostbuster"
+        ghostbuster = prepare_classifier(classifier=classifier, device=device)
+    
     evaluation = ghostbuster.predict(text)
 
     return evaluation
 
-def classify_with_gptzero(text: str, device: str) -> float:
-    classifier = "GPTZero"
-    gptzero = prepare_classifier(classifier=classifier, device=device)
+
+def classify_with_gptzero(text: str, device: str, gptzero=None) -> float:
+    if gptzero==None:
+        classifier = "GPTZero"
+        gptzero = prepare_classifier(classifier=classifier, device=device)
+    
     evaluation = gptzero.get_score(text)
 
     return evaluation
