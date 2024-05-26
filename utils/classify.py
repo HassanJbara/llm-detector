@@ -1,8 +1,8 @@
-from typing import List
+from typing import List, Union
 from utils.helpers import prepare_classifier, process_output
 
 
-def classify_with_simpleai(text: str, device: str, simpleai=None) -> float:
+def classify_with_simpleai(text: str, device: str, simpleai=None, return_label: bool = False) -> Union[float, bool]:
     if simpleai==None:
         classifier = "SimpleAI"
         simpleai = prepare_classifier(classifier, device=device)
@@ -14,28 +14,40 @@ def classify_with_simpleai(text: str, device: str, simpleai=None) -> float:
     }
 
     evaluation = simpleai(text, **sent_kwargs) # returns a list of dictionaries
-    evaluation = [x["score"] for x in evaluation if x['label'].lower() == 'chatgpt'][0]
+    evaluation = [x["score"] for x in evaluation if x['label'].lower() == 'chatgpt'][0]  
+    
+    if return_label:
+        label = evaluation > 0.5
+        return evaluation, label
 
     return evaluation
 
 
-def classify_with_binoculars(text: str, device: str, bino=None) -> float:
+def classify_with_binoculars(text: str, device: str, bino=None, return_label: bool = False) -> Union[float, bool]:
     if bino==None:
         classifier = "Binoculars"
         bino = prepare_classifier(classifier=classifier, device=device)
-    
+
     evaluation = bino.compute_score(text)
+    
+    if return_label:
+        label = "ai" in bino.predict(text).lower() # returns either "Most likely AI-generated" or "Most likely human-generated"
+        return evaluation, label
 
     return evaluation
 
 
-def classify_with_ghostbuster(text: str, device: str, ghostbuster=None) -> float:
+def classify_with_ghostbuster(text: str, device: str, ghostbuster=None, return_label: bool = False) -> Union[float, bool]:
     if ghostbuster==None:
         classifier = "Ghostbuster"
         ghostbuster = prepare_classifier(classifier=classifier, device=device)
     
     evaluation = ghostbuster.predict(text)
 
+    if return_label:
+        label = evaluation > 0.5
+        return evaluation, label
+        
     return evaluation
 
 
